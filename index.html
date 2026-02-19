@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gilded Fork | Fine Dining & Spirits</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #c5a059; /* Elegant Gold */
+            --bg-dark: #0f0f0f;
+            --bg-light: #1a1a1a;
+            --text-gold: #c5a059;
+            --text-white: #ffffff;
+            --text-muted: #a3a3a3;
+            --veg-green: #22c55e;
+            --nonveg-red: #ef4444;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 2px;
+            z-index: 1002;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: var(--transition);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--primary);
+            padding: 8px;
+            z-index: 1002;
+            transition: var(--transition);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
+            margin-bottom: 1rem;
+            font-style: italic;
+            color: var(--text-white);
+            max-width: 900px;
+        }
+
+        .hero p {
+            font-size: clamp(0.8rem, 2vw, 1.1rem);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            padding: 1.1rem 2.5rem;
+            background: var(--primary);
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 4px;
+            text-transform: uppercase;
+            transition: var(--transition);
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: #e2b86b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4);
+        }
+
+        /* Menu Section */
+        section {
+            padding: 6rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        /* Filter Tabs */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: transparent;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            color: var(--text-muted);
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            border-radius: 30px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            min-height: 400px;
+        }
+
+        .food-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: 100%;
+        }
+
+        .food-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(197, 160, 89, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .food-image-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .food-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .food-card:hover .food-image {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-category {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .food-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-white);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .diet-indicator {
+            width: 16px;
+            height: 16px;
+            border: 1px solid currentColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+            padding: 2px;
+            flex-shrink: 0;
+        }
+
+        .diet-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .food-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .food-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .food-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #fbbf24;
+            font-size: 0.85rem;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .service-card h3 {
+            margin: 1.2rem 0 0.5rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Settings */
+        @media (max-width: 768px) {
+            .hamburger { 
+                display: block; 
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 100%;
+                background: var(--bg-dark);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+                gap: 2.5rem;
+                z-index: 1001;
+            }
+
+            .nav-links.active { 
+                right: 0; 
+            }
+
+            .nav-links a {
+                font-size: 1.4rem;
+                letter-spacing: 3px;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Footer */
+        .footer-grid {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .footer-col p, .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .social-links i {
+            color: var(--text-white);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .social-links i:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">THE GILDED FORK</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="closeMenu()">Home</a></li>
+                <li><a href="#menu" onclick="closeMenu()">Menu</a></li>
+                <li><a href="#services" onclick="closeMenu()">Services</a></li>
+                <li><a href="#reviews" onclick="closeMenu()">Reviews</a></li>
+                <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
+                <i data-lucide="menu" id="menuIcon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <p>Est. Since 1988</p>
+        <h1>A Masterclass in Culinary Arts</h1>
+        <a href="#menu" class="btn">Explore Our Menu</a>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu">
+        <div class="section-title">
+            <h2>Chef's Selection</h2>
+            <p>Fresh, seasonal, and crafted with passion</p>
+        </div>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterMenu('all', this)">All Items</button>
+            <button class="filter-btn" onclick="filterMenu('Starters', this)">Starters</button>
+            <button class="filter-btn" onclick="filterMenu('Veg Main', this)">Veg Main</button>
+            <button class="filter-btn" onclick="filterMenu('Non-Veg Main', this)">Non-Veg Main</button>
+            <button class="filter-btn" onclick="filterMenu('Drinks', this)">Drinks</button>
+            <button class="filter-btn" onclick="filterMenu('Desserts', this)">Desserts</button>
+        </div>
+
+        <div class="menu-grid" id="menuGrid">
+            <!-- Items injected by JS -->
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="section-title">
+            <h2>Our Exclusive Services</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&q=80" alt="Private Dining">
+                <h3>Private Dining</h3>
+                <p>An intimate and premium space designed for your family gatherings and corporate meetings.</p>
+            </div>
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1530103043960-ef38714abb15?auto=format&fit=crop&q=80" alt="Celebrations">
+                <h3>Celebrations</h3>
+                <p>From birthdays to anniversaries, we turn your special moments into lifelong memories.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" style="background: #0a0a0a; max-width: 100%;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div class="section-title">
+                <h2>Guest Experiences</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div style="background: var(--bg-light); padding: 2.5rem; border-radius: 12px; border-top: 4px solid var(--primary);">
+                    <p style="font-style: italic; margin-bottom: 1.5rem; color: #ccc;">"The Butter Chicken is easily the best in Bangalore. The atmosphere is sophisticated yet incredibly welcoming."</p>
+                    <strong style="color: var(--primary);">- Rahul Sharma</strong>
+                </div>
+                <div style="background: var(--bg-light); padding: 2.5rem; border-radius: 12px; border-top: 4px solid var(--primary);">
+                    <p style="font-style: italic; margin-bottom: 1.5rem; color: #ccc;">"World-class cocktails and impeccable service. Visiting here has become my favorite weekend ritual."</p>
+                    <strong style="color: var(--primary);">- Priya Kapoor</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>The Gilded Fork</h3>
+                <p>MG Road, Bangalore, KA<br>India - 560001</p>
+                <p>Phone: +91 99999 88888</p>
+                <p>Email: reservations@gildedfork.com</p>
+            </div>
+            <div class="footer-col">
+                <h3>Opening Hours</h3>
+                <p>Mon - Fri: 12:00 PM - 11:00 PM</p>
+                <p>Sat - Sun: 11:00 AM - 12:00 AM</p>
+            </div>
+            <div class="footer-col">
+                <h3>Follow Our Journey</h3>
+                <div class="social-links">
+                    <i data-lucide="instagram"></i>
+                    <i data-lucide="facebook"></i>
+                    <i data-lucide="twitter"></i>
+                    <i data-lucide="linkedin"></i>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; padding-top: 3rem; border-top: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); font-size: 0.85rem;">
+            &copy; 2026 The Gilded Fork | Excellence in Every Bite.
+        </div>
+    </section>
+
+    <script>
+        // Full English Menu Data
+        const menuItems = [
+            { id: 1, category: "Starters", name: "Truffle Bruschetta", price: "₹450", desc: "Toasted sourdough with wild mushrooms and premium truffle oil drizzle.", veg: true, rating: 4.8, img: "https://images.unsplash.com/photo-1572656631137-7935297eff55?auto=format&fit=crop&q=80" },
+            { id: 2, category: "Starters", name: "Crispy Calamari", price: "₹620", desc: "Tender squid rings with lemon aioli, fresh herbs, and sea salt.", veg: false, rating: 4.5, img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&q=80" },
+            { id: 3, category: "Starters", name: "Classic Paneer Tikka", price: "₹480", desc: "Clay oven roasted cottage cheese served with zesty mint chutney.", veg: true, rating: 4.9, img: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&q=80" },
+            { id: 4, category: "Veg Main", name: "Wild Mushroom Risotto", price: "₹850", desc: "Creamy Arborio rice prepared with parmesan and porcini mushrooms.", veg: true, rating: 4.7, img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&q=80" },
+            { id: 5, category: "Veg Main", name: "Paneer Butter Masala", price: "₹720", desc: "Cottage cheese in a rich tomato-based gravy with cashew cream.", veg: true, rating: 4.9, img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&q=80" },
+            { id: 6, category: "Veg Main", name: "Dal Makhani", price: "₹550", desc: "Slow-cooked black lentils finished with fresh white butter and cream.", veg: true, rating: 5.0, img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&q=80" },
+            { id: 7, category: "Non-Veg Main", name: "Signature Butter Chicken", price: "₹890", desc: "Our famous 24-hour marinated chicken in a velvet tomato sauce.", veg: false, rating: 5.0, img: "https://images.unsplash.com/photo-1603894584114-f031fbc47a21?auto=format&fit=crop&q=80" },
+            { id: 8, category: "Non-Veg Main", name: "Atlantic Grilled Salmon", price: "₹1450", desc: "Pan-seared salmon served with asparagus and lemon butter sauce.", veg: false, rating: 4.8, img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80" },
+            { id: 9, category: "Non-Veg Main", name: "Lucknowi Mutton Biryani", price: "₹950", desc: "Traditional slow-cooked fragrant rice with tender lamb pieces.", veg: false, rating: 4.9, img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&q=80" },
+            { id: 10, category: "Drinks", name: "Golden Martini", price: "₹550", desc: "Our signature gin cocktail featuring genuine edible gold leaf.", veg: true, rating: 4.9, img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80" },
+            { id: 11, category: "Drinks", name: "Classic Mojito", price: "₹450", desc: "Muddled mint and lime with premium white rum and sugar.", veg: true, rating: 4.6, img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80" },
+            { id: 12, category: "Desserts", name: "Classic Tiramisu", price: "₹550", desc: "Espresso-soaked savoiardi layered with whipped mascarpone.", veg: true, rating: 4.9, img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&q=80" }
+        ];
+
+        // Function to render menu items
+        function renderMenu(items) {
+            const grid = document.getElementById('menuGrid');
+            if (!grid) return;
+            
+            if (items.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-muted);">No items found in this category.</div>`;
+                return;
+            }
+
+            grid.innerHTML = items.map(item => `
+                <div class="food-card">
+                    <div class="food-image-container">
+                        <img src="${item.img}" class="food-image" alt="${item.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300?text=Delicious+Food'">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category">${item.category}</span>
+                        <h4 class="food-name">
+                            <div class="diet-indicator" style="color: ${item.veg ? 'var(--veg-green)' : 'var(--nonveg-red)'}">
+                                <div class="diet-dot"></div>
+                            </div>
+                            ${item.name}
+                        </h4>
+                        <p class="food-desc">${item.desc}</p>
+                        <div class="card-footer">
+                            <div class="food-price">${item.price}</div>
+                            <div class="food-rating">
+                                <i data-lucide="star" style="width:14px; height:14px; fill: #fbbf24; stroke: none;"></i>
+                                <span>${item.rating}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }
+
+        // Filter Logic
+        function filterMenu(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            if (category === 'all') {
+                renderMenu(menuItems);
+            } else {
+                const filtered = menuItems.filter(item => item.category === category);
+                renderMenu(filtered);
+            }
+        }
+
+        // Mobile Navbar Logic
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        const menuIcon = document.getElementById('menuIcon');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const isActive = navLinks.classList.contains('active');
+            
+            // Set correct icon (X or Menu)
+            menuIcon.setAttribute('data-lucide', isActive ? 'x' : 'menu');
+            lucide.createIcons();
+            
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = isActive ? 'hidden' : 'auto';
+        });
+
+        function closeMenu() {
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderMenu(menuItems); // Load all items initially
+        });
+    </script>
+</body>
+</html>
